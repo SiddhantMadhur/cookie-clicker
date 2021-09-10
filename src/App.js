@@ -1,25 +1,56 @@
-import logo from './logo.svg';
 import './App.css';
+import React, { useState } from 'react';
 
-function App() {
+
+
+
+
+
+export default function App() {
+  let alertvar = 0;
+  const [count, setCount] = useState(0);
+
+  const add = () => {
+    setCount((prev) => {
+      return prev + 1;
+    })
+    if (localStorage.getItem('hs') <= count) {
+      localStorage.setItem('hs', (count + 1));
+    }
+
+  }
+
+  const reset = () => {
+    if (alertvar === 1) {
+      localStorage.setItem('hs', 0);
+      setCount(0)
+    } else if (alertvar === 0) {
+      alert('Resetting progress would mean that you would lose your highscore, please press the button again if you\'re sure.');
+      alertvar++;
+    }
+
+  }
+
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+
+        <h3>Your current high-score: {localStorage.getItem('hs')}</h3>
+        <h1>{count}</h1>
+        <h3>
+          <button type="button" onClick={add} > click </button>
+        </h3>
+        <br />
+        <button onClick={reset}>Reset Progress</button>
+        <h6>
+          <a href="https://thelanshow.gq">
+            go back to thelanshow
+          </a>
+        </h6>
       </header>
     </div>
   );
 }
 
-export default App;
+
